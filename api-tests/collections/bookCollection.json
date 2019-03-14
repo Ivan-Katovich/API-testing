@@ -1,0 +1,39 @@
+{
+  "getBooksCount": {
+    "method": "GET",
+    "url": "/books/count",
+    "headers": {
+      "Content-type": "application/json"
+    }
+  },
+  "getBooks": {
+    "method": "GET",
+    "url": "/books",
+    "headers": {
+      "Content-type": "application/json"
+    }
+  },
+  "postBooks": {
+    "method": "POST",
+    "url": "/books",
+    "headers": {
+      "Content-type": "application/json"
+    },
+    "body": [
+      {
+        "name": "Nice day",
+        "author": {"name":"Sara Carrigan", "isAlive": false},
+        "pages": 1111,
+        "date": "12 Jun 2324",
+        "isDigitized": true
+      },
+      {
+        "name": "The secret of the third planet",
+        "author": {"name":"Edgar Po", "isAlive": false},
+        "pages": 156,
+        "date": "22 May 1904",
+        "isDigitized": false
+      }
+    ]
+  }
+}

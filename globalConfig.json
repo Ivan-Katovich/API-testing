@@ -1,0 +1,12 @@
+{
+  "db": {
+    "url": "mongodb://localhost",
+    "port": 27017,
+    "name": "bookslib",
+    "collection": "books"
+  },
+  "backend": {
+    "url": "http://localhost",
+    "port": 8080
+  }
+}

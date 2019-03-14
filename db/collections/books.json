@@ -1,0 +1,10 @@
+[
+  { "name" : "Fairy Tail", "author" : {"name": "Ivan Ivanow", "isAlive": true}, "pages" : 200, "date" : "7 Feb 2010", "isDigitized" : true },
+  { "name" : "Zveroboy", "author" : {"name": "Fenimor Cooper", "isAlive": false}, "pages" : 435, "date" : "11 Sep 1935", "isDigitized" : true },
+  { "name" : "Funny story", "author" : {"name": "Bill Murray", "isAlive": true}, "pages" : 25, "date" : "24 May 1991", "isDigitized" : false },
+  { "name" : "True coding", "author" : {"name": "Bill Gates", "isAlive": true}, "pages" : 618, "date" : "17 May 1998", "isDigitized" : false },
+  { "name" : "Cosanostra", "author" : {"name": "David Buye", "isAlive": true}, "pages" : 333, "date" : "3 Aug 2005", "isDigitized" : true },
+  { "name" : "Dolphins", "author" : {"name": "Luter King", "isAlive": false}, "pages" : 122, "date" : "31 Oct 1888", "isDigitized" : true, "coast": 334 },
+  { "name" : "True story", "author" : {"name": "Bill Murray", "isAlive": true}, "pages" : 666, "date" : "20 Nov 1974", "isDigitized" : false },
+  { "name" : "the Best of the best", "author" : {"name": "Joe Best", "isAlive": true}, "pages" : 1023, "date" : "6 Jan 2017", "isDigitized" : true, "coast": 100}
+]
