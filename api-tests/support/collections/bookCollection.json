@@ -35,5 +35,41 @@
         "isDigitized": false
       }
     ]
+  },
+  "getBook": {
+    "method": "GET",
+    "url": "/book",
+    "headers": {
+      "Content-type": "application/json"
+    }
+  },
+  "deleteBook": {
+    "method": "DELETE",
+    "url": "/book",
+    "headers": {
+      "Content-type": "application/json"
+    }
+  },
+  "updateBookWithAllNewFields": {
+    "method": "PUT",
+    "url": "/book",
+    "headers": {
+      "Content-type": "application/json"
+    },
+    "body": {
+      "name": "Terra nova",
+      "author": {"name":"Varian Wrynn", "isAlive": false},
+      "pages": 2212,
+      "date": "1 Dec 1881",
+      "isDigitized": false
+    }
+  },
+  "updateBook": {
+    "method": "PUT",
+    "url": "/book",
+    "headers": {
+      "Content-type": "application/json"
+    },
+    "body": {}
   }
 }

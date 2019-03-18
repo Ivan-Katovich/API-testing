@@ -1,3 +1,29 @@
+
+const errorSchema = {
+    title: 'error schema v1',
+    type: 'object',
+    required: ['err'],
+    properties: {
+        err: {
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'string'
+                },
+                index: {
+                    type: 'number'
+                },
+                code: {
+                    type: 'number'
+                },
+                errmsg: {
+                    type: 'string'
+                }
+            }
+        }
+    }
+};
+
 const resultsSchema = {
     title: 'results schema v1',
     type: 'object',
@@ -12,6 +38,9 @@ const resultsSchema = {
         },
         insertedCount: {
             type: 'number'
+        },
+        id: {
+            type: 'string'
         }
     }
 };
@@ -34,7 +63,7 @@ const authorSchema = {
 const bookSchema = {
     title: 'book schema v1',
     type: 'object',
-    required: ['name', 'author', 'pages', 'date'],
+    required: ['name', 'author', 'pages', 'date', '_id'],
     additionalProperties: true,
     properties: {
         name: {
@@ -54,6 +83,9 @@ const bookSchema = {
         coast: {
             type: 'number',
             minimum: 10
+        },
+        _id: {
+            type: ['string','object']
         }
     }
 };
@@ -63,4 +95,4 @@ const bookListSchema = {
     items: bookSchema
 }
 
-module.exports = {bookSchema, authorSchema, resultsSchema, bookListSchema};
+module.exports = {bookSchema, authorSchema, resultsSchema, bookListSchema, errorSchema};

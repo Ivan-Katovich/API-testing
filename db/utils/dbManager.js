@@ -1,8 +1,9 @@
 const config = require('../../globalConfig').db;
 const MongoClient = require('mongodb').MongoClient;
 
+process.env.npm_config_action = process.env.npm_config_action || 'create';
+
 const create = async() => {
-    // console.log('start creation');
     let client, db;
     try {
         client = await MongoClient.connect(`${config.url}:${config.port}`, { useNewUrlParser: true });
@@ -10,16 +11,9 @@ const create = async() => {
     } catch(err) {
         throw err;
     }
-    // const stats = await db.stats();
-    // console.log(stats);
     const col = db.collection(config.collection);
     await col.insertMany(require(`../collections/${config.collection}.json`));
-    // const books = await col.find().toArray();
-    // console.log(books);
-    // await col.drop();
-    // await db.dropDatabase();
     await client.close(true);
-    // console.log('end creation');
 };
 
 const dropCollection = async () => {
@@ -36,7 +30,6 @@ const dropCollection = async () => {
 };
 
 const remove = async() => {
-    // console.log('start removing');
     let client, db;
     try {
         client = await MongoClient.connect(`${config.url}:${config.port}`, { useNewUrlParser: true });
@@ -46,10 +39,10 @@ const remove = async() => {
         throw err;
     }
     await client.close(true);
-    // console.log('end removing');
 };
 
-// create();
+const dbManager = {create, remove, dropCollection};
+console.log(process.env.npm_config_action);
 
-module.exports = {create, remove, dropCollection};
+dbManager[process.env.npm_config_action]();
 

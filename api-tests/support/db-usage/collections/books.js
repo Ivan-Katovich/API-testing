@@ -1,25 +1,18 @@
-const config = require('../../globalConfig').db;
-const MongoClient = require('mongodb').MongoClient;
+const config = require('../../../../globalConfig').db;
 const ObjectId = require('mongodb').ObjectId;
-let client, db;
+const client = require('../client');
+let db;
 
 async function getCollection(){
-    client = await MongoClient.connect(`${config.url}:${config.port}`, { useNewUrlParser: true });
-    db = client.db(config.name);
+    db = (await client.getInstance()).db(config.name);
     return db.collection(config.collection);
-}
-
-async function closeClient(){
-    await client.close(true);
 }
 
 const books = {
     async getAll(){
         try {
             const col = await getCollection();
-            const booksList = await col.find().toArray();
-            await closeClient();
-            return booksList;
+            return await col.find().toArray();
         } catch(err) {
             throw err;
         }
@@ -29,7 +22,6 @@ const books = {
         try {
             const col = await getCollection();
             const count = await col.countDocuments(filter);
-            await closeClient();
             return {documentsCount: count, filter: filter};
         } catch(err) {
             throw err;
@@ -41,7 +33,6 @@ const books = {
             const col = await getCollection();
             await col.insertMany(books);
             const count = await col.countDocuments();
-            await closeClient();
             return {documentsCount: count, insertedCount: books.length};
         } catch(err) {
             throw err;
@@ -51,9 +42,7 @@ const books = {
     async getOne(id){
         try {
             const col = await getCollection();
-            const currentBook = await col.findOne({_id: new ObjectId(id)});
-            await closeClient();
-            return currentBook;
+            return await col.findOne({_id: new ObjectId(id)});
         } catch(err) {
             throw err;
         }
@@ -64,7 +53,6 @@ const books = {
             const col = await getCollection();
             await col.deleteOne({_id: new ObjectId(id)});
             const count = await col.countDocuments();
-            await closeClient();
             return {documentsCount: count};
         } catch(err) {
             throw err;
@@ -75,12 +63,14 @@ const books = {
         try {
             const col = await getCollection();
             await col.updateOne({_id: new ObjectId(id)}, {$set: updates});
-            const currentBook = await col.findOne({_id: new ObjectId(id)});
-            await closeClient();
-            return currentBook;
+            return await col.findOne({_id: new ObjectId(id)});
         } catch(err) {
             throw err;
         }
+    },
+
+    async closeClient(){
+        await client.stopInstance();
     }
 
 };
