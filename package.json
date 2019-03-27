@@ -4,8 +4,11 @@
   "description": "API testing with own made backend and database",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "dbAction": "node db\\utils\\dbManager.js"
+    "test": "npm run hint && npm run mocha",
+    "mocha": "mocha",
+    "rp-test": "node api-tests\\main.js",
+    "dbAction": "node db\\utils\\dbManager.js",
+    "hint": "jshint ."
   },
   "repository": {
     "type": "git",
@@ -17,12 +20,15 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-mongo-db": "^2.0.4",
+    "jshint": "^2.10.2",
     "mongodb": "^3.1.13"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-json-schema": "^1.5.0",
     "mocha": "^6.0.2",
+    "mocha-multi-reporters": "^1.1.7",
+    "mocha-reportportal-agent": "^0.2.3",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   }

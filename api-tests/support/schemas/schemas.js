@@ -93,6 +93,6 @@ const bookSchema = {
 const bookListSchema = {
     type: 'array',
     items: bookSchema
-}
+};
 
 module.exports = {bookSchema, authorSchema, resultsSchema, bookListSchema, errorSchema};

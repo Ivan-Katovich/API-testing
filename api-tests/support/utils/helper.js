@@ -8,13 +8,13 @@ module.exports = {
             if (collection[key].body && typeof collection[key].body === 'object') {
                 collection[key].body = JSON.stringify(collection[key].body);
             }
-        })
+        });
     },
     sleep(timeout) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
                 resolve();
             }, timeout);
-        })
+        });
     }
 };

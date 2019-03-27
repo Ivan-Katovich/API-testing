@@ -2,6 +2,7 @@
   "getBooksCount": {
     "method": "GET",
     "url": "/books/count",
+    "resolveWithFullResponse": true,
     "headers": {
       "Content-type": "application/json"
     }
@@ -9,6 +10,7 @@
   "getBooks": {
     "method": "GET",
     "url": "/books",
+    "resolveWithFullResponse": true,
     "headers": {
       "Content-type": "application/json"
     }
@@ -16,6 +18,7 @@
   "postBooks": {
     "method": "POST",
     "url": "/books",
+    "resolveWithFullResponse": true,
     "headers": {
       "Content-type": "application/json"
     },
@@ -39,6 +42,7 @@
   "getBook": {
     "method": "GET",
     "url": "/book",
+    "resolveWithFullResponse": true,
     "headers": {
       "Content-type": "application/json"
     }
@@ -46,6 +50,7 @@
   "deleteBook": {
     "method": "DELETE",
     "url": "/book",
+    "resolveWithFullResponse": true,
     "headers": {
       "Content-type": "application/json"
     }
@@ -53,6 +58,7 @@
   "updateBookWithAllNewFields": {
     "method": "PUT",
     "url": "/book",
+    "resolveWithFullResponse": true,
     "headers": {
       "Content-type": "application/json"
     },
@@ -67,6 +73,7 @@
   "updateBook": {
     "method": "PUT",
     "url": "/book",
+    "resolveWithFullResponse": true,
     "headers": {
       "Content-type": "application/json"
     },

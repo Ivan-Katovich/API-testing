@@ -8,7 +8,7 @@ module.exports = {
             if (!instance) {
                 instance = await MongoClient.connect(`${config.url}:${config.port}`, { useNewUrlParser: true });
             }
-            return instance
+            return instance;
         } catch (err) {
             throw err;
         }
@@ -17,7 +17,7 @@ module.exports = {
     async stopInstance(){
         try {
             await instance.close(true);
-            instance = null
+            instance = null;
         } catch (err) {
             throw err;
         }

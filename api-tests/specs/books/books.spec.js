@@ -1,3 +1,7 @@
+/*process.env.https_proxy = 'http://127.0.0.1:5555';
+process.env.http_proxy = 'http://127.0.0.1:5555';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';*/
+
 const Api = require('../../support/api');
 const api = new Api();
 
@@ -8,10 +12,10 @@ describe('Library', function() {
         await api.dbManager.create();
     });
 
-    after(async function(){
-        await api.dbManager.remove();
-
-    });
+    // after(async function(){
+    //     await api.dbManager.remove();
+    //
+    // });
 
     describe('Book List', function() {
         describe('Able to get information about books', function() {
@@ -20,8 +24,10 @@ describe('Library', function() {
                     api.rp(api.collection.getBooksCount),
                     api.dbCollections.books.count()
                 ]);
-                const responseBody = JSON.parse(results[0]);
+                const responseBody = JSON.parse(results[0].body);
+                const statusCode = results[0].statusCode;
                 const dbOutput = results[1];
+                api.expect(statusCode).to.be.equal(200);
                 api.expect(responseBody).to.be.jsonSchema(api.schemas.resultsSchema);
                 api.expect(responseBody.documentsCount).to.be.equal(dbOutput.documentsCount);
             });
@@ -31,8 +37,10 @@ describe('Library', function() {
                     api.rp(api.collection.getBooks),
                     api.dbCollections.books.count()
                 ]);
-                const responseBody = JSON.parse(results[0]);
+                const responseBody = JSON.parse(results[0].body);
+                const statusCode = results[0].statusCode;
                 const dbOutput = results[1];
+                api.expect(statusCode).to.be.equal(200);
                 api.expect(responseBody).to.be.jsonSchema(api.schemas.bookListSchema);
                 api.expect(responseBody.length).to.be.equal(dbOutput.documentsCount);
             });
@@ -47,8 +55,11 @@ describe('Library', function() {
 
             it('Able to add few NEW books', async function() {
                 const insertCount = JSON.parse(api.collection.postBooks.body).length;
-                const responseBody = JSON.parse(await api.rp(api.collection.postBooks));
+                const response = await api.rp(api.collection.postBooks);
+                const responseBody = JSON.parse(response.body);
+                const statusCode = response.statusCode;
                 const dbOutput = await api.dbCollections.books.count();
+                api.expect(statusCode).to.be.equal(200);
                 api.expect(responseBody).to.be.jsonSchema(api.schemas.resultsSchema);
                 api.expect(responseBody.documentsCount).to.be.equal(dbOutput.documentsCount);
                 api.expect(responseBody.insertedCount).to.be.equal(insertCount);
@@ -71,7 +82,9 @@ describe('Library', function() {
                 await Promise.all(ids.map(async (id) => {
                     const opts = Object.create(api.collection.getBook);
                     opts.url = `${opts.url}/${id}`;
-                    const book = JSON.parse(await api.rp(opts));
+                    const response = await api.rp(opts);
+                    const book = JSON.parse(response.body);
+                    api.expect(response.statusCode).to.be.equal(200);
                     api.expect(book).to.be.jsonSchema(api.schemas.bookSchema);
                     api.expect(book._id).to.be.equal(id.toString());
                 }));
@@ -97,7 +110,9 @@ describe('Library', function() {
                 await Promise.all(ids.map(async (id, index) => {
                     const opts = Object.create(api.collection.deleteBook);
                     opts.url = `${opts.url}/${id}`;
-                    const responseBody = JSON.parse(await api.rp(opts));
+                    const response = await api.rp(opts);
+                    const responseBody = JSON.parse(response.body);
+                    api.expect(response.statusCode).to.be.equal(200);
                     api.expect(responseBody).to.be.jsonSchema(api.schemas.resultsSchema);
                     api.expect(responseBody.id).to.be.equal(id.toString());
                     if (index === ids.length - 1) {
@@ -112,8 +127,10 @@ describe('Library', function() {
                 const existingBook = await api.dbCollections.books.getOne(ids[index]);
                 const opts = Object.create(api.collection.updateBookWithAllNewFields);
                 opts.url = `${opts.url}/${ids[index]}`;
-                const newBook = JSON.parse(await api.rp(opts));
+                const response = await api.rp(opts);
+                const newBook = JSON.parse(response.body);
                 const newBookFromDb = await api.dbCollections.books.getOne(ids[index]);
+                api.expect(response.statusCode).to.be.equal(200);
                 api.expect(JSON.stringify(newBook)).to.not.equal(JSON.stringify(existingBook));
                 api.expect(JSON.stringify(newBook)).to.equal(JSON.stringify(newBookFromDb));
                 api.expect(newBook).to.be.jsonSchema(api.schemas.bookSchema);
@@ -127,9 +144,11 @@ describe('Library', function() {
                 const opts = Object.create(api.collection.updateBookWithAllNewFields);
                 opts.url = `${opts.url}/${ids[index]}`;
                 opts.body = JSON.stringify({_id: '5c8b80b07e9711361c7428ce'});
-                const responseBody = JSON.parse(await api.rp(opts));
+                const response = await api.rp(opts);
+                const responseBody = JSON.parse(response.body);
                 const error = responseBody.err;
                 const newBookFromDb = await api.dbCollections.books.getOne(ids[index]);
+                api.expect(response.statusCode).to.be.equal(200);
                 api.expect(responseBody).to.be.jsonSchema(api.schemas.errorSchema);
                 api.expect(error.code).to.equal(66);
                 api.expect(error.errmsg).to.equal(`Performing an update on the path '_id' would modify the immutable field '_id'`);
